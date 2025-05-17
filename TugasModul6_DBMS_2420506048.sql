@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 22 Mar 2025 pada 02.53
--- Versi server: 10.4.32-MariaDB
--- Versi PHP: 8.2.12
+-- Generation Time: May 17, 2025 at 04:23 AM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,186 +18,139 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `kampus`
+-- Database: `db_penjualan`
 --
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `ambil_mk`
+-- Table structure for table `pelanggan`
 --
 
-CREATE TABLE `ambil_mk` (
-  `nim` char(10) NOT NULL,
-  `kode_mk` char(5) NOT NULL
+CREATE TABLE `pelanggan` (
+  `id_pelanggan` int(11) NOT NULL,
+  `nama_pelanggan` varchar(50) DEFAULT NULL,
+  `alamat` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data untuk tabel `ambil_mk`
+-- Dumping data for table `pelanggan`
 --
 
-INSERT INTO `ambil_mk` (`nim`, `kode_mk`) VALUES
-('M001', 'MK001'),
-('M001', 'MK002'),
-('M002', 'MK003');
+INSERT INTO `pelanggan` (`id_pelanggan`, `nama_pelanggan`, `alamat`) VALUES
+(10, 'Andi', 'Jl. Merdeka No. 1'),
+(11, 'Budi', 'Jl. Sudirman No. 12'),
+(12, 'Citra', 'Jl. Gatot Subroto No. 45'),
+(13, 'Dewi', 'Jl. Thamrin No. 8'),
+(14, 'Eka', 'Jl. Asia Afrika No. 15'),
+(15, 'Fajar', 'Jl. Pahlawan No. 7'),
+(16, 'Gita', 'Jl. Diponegoro No. 23');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `dosen`
+-- Table structure for table `produk`
 --
 
-CREATE TABLE `dosen` (
-  `kode_dos` char(5) NOT NULL,
-  `nama_dos` varchar(100) NOT NULL,
-  `alamat` text NOT NULL,
-  `jabatan` varchar(50) NOT NULL
+CREATE TABLE `produk` (
+  `kode_produk` varchar(10) NOT NULL,
+  `nama_produk` varchar(50) DEFAULT NULL,
+  `harga` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data untuk tabel `dosen`
+-- Dumping data for table `produk`
 --
 
-INSERT INTO `dosen` (`kode_dos`, `nama_dos`, `alamat`, `jabatan`) VALUES
-('D001', 'Ahmad Fauzi', 'Bandung', 'Ketua Jurusan'),
-('D002', 'Budi Santoso', 'Jakarta', 'Ketua Jurusan'),
-('D003', 'Siti Rahma', 'Surabaya', 'Ketua Jurusan'),
-('D004', 'Joko Prasetyo', 'Yogyakarta', 'Ketua Jurusan'),
-('D005', 'Dewi Kartika', 'Malang', 'Ketua Jurusan'),
-('D006', 'Bambang', 'Magelang', 'Dosen');
+INSERT INTO `produk` (`kode_produk`, `nama_produk`, `harga`) VALUES
+('P001', 'Laptop', 7000000),
+('P002', 'Mouse', 150000),
+('P003', 'Keyboard', 250000),
+('P004', 'Monitor', 1500000),
+('P005', 'Printer', 1200000),
+('P006', 'Flashdisk 32GB', 120000),
+('P007', 'External HDD 1TB', 800000);
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `jurusan`
+-- Table structure for table `transaksi`
 --
 
-CREATE TABLE `jurusan` (
-  `kode_jur` char(5) NOT NULL,
-  `nama_jur` varchar(100) NOT NULL,
-  `kode_dos` char(5) NOT NULL
+CREATE TABLE `transaksi` (
+  `id_transaksi` int(11) NOT NULL,
+  `kode_produk` varchar(10) DEFAULT NULL,
+  `jumlah` int(11) DEFAULT NULL,
+  `total_harga` int(11) DEFAULT NULL,
+  `id_pelanggan` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data untuk tabel `jurusan`
+-- Dumping data for table `transaksi`
 --
 
-INSERT INTO `jurusan` (`kode_jur`, `nama_jur`, `kode_dos`) VALUES
-('J001', 'Teknologi Informasi', 'D001'),
-('J002', 'Teknik Elektro', 'D002'),
-('J003', 'Teknik Industri', 'D003'),
-('J004', 'Teknik Mesin', 'D004'),
-('J005', 'Teknik Sipil', 'D005'),
-('J006', 'Teknik Elektro', 'D006');
-
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `mahasiswa`
---
-
-CREATE TABLE `mahasiswa` (
-  `nim` char(10) NOT NULL,
-  `nama` varchar(100) NOT NULL,
-  `jenis_kelamin` enum('L','P') NOT NULL,
-  `alamat` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data untuk tabel `mahasiswa`
---
-
-INSERT INTO `mahasiswa` (`nim`, `nama`, `jenis_kelamin`, `alamat`) VALUES
-('M001', 'Rizky Ramadhan', 'L', 'Jakarta'),
-('M002', 'Putri Ayu', 'P', 'Bandung'),
-('M003', 'Fajar Nugroho', 'L', 'Surabaya'),
-('M004', 'Siti Aminah', 'P', 'Yogyakarta'),
-('M005', 'Ahmad Zulfikar', 'L', 'Malang');
-
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `matakuliah`
---
-
-CREATE TABLE `matakuliah` (
-  `kode_mk` char(5) NOT NULL,
-  `nama_mk` varchar(100) NOT NULL,
-  `sks` int(11) NOT NULL,
-  `semester` int(11) NOT NULL,
-  `kode_dos` char(5) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data untuk tabel `matakuliah`
---
-
-INSERT INTO `matakuliah` (`kode_mk`, `nama_mk`, `sks`, `semester`, `kode_dos`) VALUES
-('MK001', 'Basis Data', 3, 3, 'D001'),
-('MK002', 'Jaringan Komputer', 4, 4, 'D001'),
-('MK003', 'Pemrograman Web', 3, 2, 'D003'),
-('MK004', 'Elektronika Digital', 3, 3, 'D002'),
-('MK005', 'Sistem Operasi', 4, 5, 'D004');
+INSERT INTO `transaksi` (`id_transaksi`, `kode_produk`, `jumlah`, `total_harga`, `id_pelanggan`) VALUES
+(10, 'P001', 2, 14000000, 10),
+(11, 'P002', 5, 750000, 11),
+(12, 'P003', 3, 750000, 12),
+(13, 'P004', 1, 1500000, 13),
+(14, 'P005', 2, 2400000, 14),
+(15, 'P006', 10, 1200000, 15),
+(16, 'P007', 4, 3200000, 16);
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indeks untuk tabel `ambil_mk`
+-- Indexes for table `pelanggan`
 --
-ALTER TABLE `ambil_mk`
-  ADD PRIMARY KEY (`nim`,`kode_mk`),
-  ADD KEY `kode_mk` (`kode_mk`);
+ALTER TABLE `pelanggan`
+  ADD PRIMARY KEY (`id_pelanggan`);
 
 --
--- Indeks untuk tabel `dosen`
+-- Indexes for table `produk`
 --
-ALTER TABLE `dosen`
-  ADD PRIMARY KEY (`kode_dos`);
+ALTER TABLE `produk`
+  ADD PRIMARY KEY (`kode_produk`),
+  ADD UNIQUE KEY `idx_kode_produk` (`kode_produk`),
+  ADD KEY `idx_harga` (`harga`);
 
 --
--- Indeks untuk tabel `jurusan`
+-- Indexes for table `transaksi`
 --
-ALTER TABLE `jurusan`
-  ADD PRIMARY KEY (`kode_jur`),
-  ADD KEY `kode_dos` (`kode_dos`);
+ALTER TABLE `transaksi`
+  ADD PRIMARY KEY (`id_transaksi`),
+  ADD KEY `kode_produk` (`kode_produk`),
+  ADD KEY `idx_total_harga` (`total_harga`),
+  ADD KEY `idx_id_pelanggan` (`id_pelanggan`);
 
 --
--- Indeks untuk tabel `mahasiswa`
---
-ALTER TABLE `mahasiswa`
-  ADD PRIMARY KEY (`nim`);
-
---
--- Indeks untuk tabel `matakuliah`
---
-ALTER TABLE `matakuliah`
-  ADD PRIMARY KEY (`kode_mk`),
-  ADD KEY `kode_dos` (`kode_dos`);
-
---
--- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- Ketidakleluasaan untuk tabel `ambil_mk`
+-- AUTO_INCREMENT for table `pelanggan`
 --
-ALTER TABLE `ambil_mk`
-  ADD CONSTRAINT `ambil_mk_ibfk_1` FOREIGN KEY (`nim`) REFERENCES `mahasiswa` (`nim`),
-  ADD CONSTRAINT `ambil_mk_ibfk_2` FOREIGN KEY (`kode_mk`) REFERENCES `matakuliah` (`kode_mk`);
+ALTER TABLE `pelanggan`
+  MODIFY `id_pelanggan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
--- Ketidakleluasaan untuk tabel `jurusan`
+-- AUTO_INCREMENT for table `transaksi`
 --
-ALTER TABLE `jurusan`
-  ADD CONSTRAINT `jurusan_ibfk_1` FOREIGN KEY (`kode_dos`) REFERENCES `dosen` (`kode_dos`);
+ALTER TABLE `transaksi`
+  MODIFY `id_transaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
--- Ketidakleluasaan untuk tabel `matakuliah`
+-- Constraints for dumped tables
 --
-ALTER TABLE `matakuliah`
-  ADD CONSTRAINT `matakuliah_ibfk_1` FOREIGN KEY (`kode_dos`) REFERENCES `dosen` (`kode_dos`);
+
+--
+-- Constraints for table `transaksi`
+--
+ALTER TABLE `transaksi`
+  ADD CONSTRAINT `transaksi_ibfk_1` FOREIGN KEY (`kode_produk`) REFERENCES `produk` (`kode_produk`),
+  ADD CONSTRAINT `transaksi_ibfk_2` FOREIGN KEY (`id_pelanggan`) REFERENCES `pelanggan` (`id_pelanggan`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
